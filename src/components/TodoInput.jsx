@@ -1,23 +1,39 @@
+import { useRef } from 'react';
 import { createTodoAction } from '../actions/create-todo.action';
 
-const TodoInput = ({ onAddNewPlanet }) => {
-  const handleAddNewPlanet = async formData => {
+const TodoInput = ({ setOptimisticTodos, setTodos }) => {
+  const formRef = useRef();
+
+  const handleAddNewTodo = async formData => {
     const todoText = formData.get('newTodo');
 
     const newTodo = {
-      id: Math.random().toString(36).substr(2, 9),
+      id: crypto.randomUUID(),
       name: todoText,
-      status: 'pending',
+      completed: false,
     };
 
-    onAddNewPlanet(newTodo);
+    formRef.current.reset();
 
-    await createTodoAction(newTodo);
+    try {
+      setOptimisticTodos(todos => [...todos, { ...newTodo }]);
+      const retrievedTodo = await createTodoAction(newTodo);
+
+      setTodos(todos => {
+        const newTodos = [...todos, { ...retrievedTodo }];
+
+        return newTodos;
+      });
+    } catch (error) {
+      console.error(error);
+      // onAddNewTodo(newTodo);
+    }
   };
+
   return (
     <div className="text-center">
       <h1 className="text-3xl font-bold">ToDos</h1>
-      <form className="mt-4 flex" action={handleAddNewPlanet}>
+      <form className="mt-4 flex" action={handleAddNewTodo} ref={formRef}>
         <input
           className="w-80 border-b-2 border-gray-500 text-black"
           type="text"

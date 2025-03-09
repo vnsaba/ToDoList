@@ -1,4 +1,36 @@
-const TodoItem = ({ text, completed }) => {
+import { useState, useTransition } from 'react';
+import { completeTodoAction } from '../actions/complete-todo.action';
+
+const TodoItem = ({ id, name, completed, setOptimisticTodos, setTodos }) => {
+  const [_, startTransition] = useTransition();
+  const [isChecked, setIsChecked] = useState(completed);
+
+  const handleCompleteTodo = event => {
+    const { checked } = event.target;
+
+    setIsChecked(checked);
+
+    startTransition(async () => {
+      try {
+        setOptimisticTodos(todos =>
+          todos.map(todo =>
+            todo.id === id ? { ...todo, completed: checked } : todo
+          )
+        );
+
+        await completeTodoAction(id);
+
+        setTodos(todos =>
+          todos.map(todo =>
+            todo.id === id ? { ...todo, completed: checked } : todo
+          )
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  };
+
   return (
     <li className="p-2 rounded-lg">
       <div className="flex align-middle flex-row justify-between">
@@ -6,8 +38,8 @@ const TodoItem = ({ text, completed }) => {
           <input
             type="checkbox"
             className="h-6 w-6 "
-            defaultValue="true"
-            defaultChecked=""
+            onChange={handleCompleteTodo}
+            checked={isChecked}
           />
         </div>
         <div className="p-2">
@@ -16,7 +48,7 @@ const TodoItem = ({ text, completed }) => {
               completed ? 'line-through text-gray-400' : 'text-black'
             }`}
           >
-            {text}
+            {name}
           </p>
         </div>
         <button className="flex text-red-500 border-2 border-red-500 p-2 rounded-lg">

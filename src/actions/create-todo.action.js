@@ -1,16 +1,22 @@
 export const createTodoAction = async todo => {
   try {
-    // await fetch('http://localhost:3001/todos', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(todo),
-    // });
+    /*
+    const res = await fetch('http://localhost:3001/api/todos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(todo),
+    });
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const createdTodo = await res.json();
 
-    console.log('Todo creado', todo);
+    return createdTodo;
+    */
+
+    console.log('Todo creado:', todo);
+
+    return {...todo, id: Math.floor(Math.random() * 1000)};
   } catch (error) {
     console.error(error);
   }
