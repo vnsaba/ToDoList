@@ -1,5 +1,6 @@
 import { useState, useTransition } from 'react';
 import { completeTodoAction } from '../../actions/complete-todo.action';
+import { removeTodoAction } from '../../actions/remove-todo.action';
 
 const TodoItem = ({ id, name, completed, setOptimisticTodos, setTodos }) => {
   const [_, startTransition] = useTransition();
@@ -10,21 +11,33 @@ const TodoItem = ({ id, name, completed, setOptimisticTodos, setTodos }) => {
 
     setIsChecked(checked);
 
+    const setCompleteTodo = todos =>
+      todos.map(todo =>
+        todo.id === id ? { ...todo, completed: checked } : todo
+      );
+
     startTransition(async () => {
       try {
-        setOptimisticTodos(todos =>
-          todos.map(todo =>
-            todo.id === id ? { ...todo, completed: checked } : todo
-          )
-        );
+        setOptimisticTodos(setCompleteTodo);
 
         await completeTodoAction(id);
 
-        setTodos(todos =>
-          todos.map(todo =>
-            todo.id === id ? { ...todo, completed: checked } : todo
-          )
-        );
+        setTodos(setCompleteTodo);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  };
+
+  const handleRemoveTodo = () => {
+    const removeTodo = todos => todos.filter(todo => todo.id !== id);
+    startTransition(async () => {
+      try {
+        setOptimisticTodos(removeTodo);
+
+        await removeTodoAction(id);
+
+        setTodos(removeTodo);
       } catch (error) {
         console.error(error);
       }
@@ -51,7 +64,10 @@ const TodoItem = ({ id, name, completed, setOptimisticTodos, setTodos }) => {
             {name}
           </p>
         </div>
-        <button className="flex text-red-500 border-2 border-red-500 p-2 rounded-lg">
+        <button
+          className="flex text-red-500 border-2 border-red-500 p-2 rounded-lg"
+          onClick={handleRemoveTodo}
+        >
           <svg
             className="h-6 w-6 text-red-500"
             viewBox="0 0 24 24"

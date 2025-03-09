@@ -8,7 +8,7 @@ const TodoInput = ({ setOptimisticTodos, setTodos }) => {
     const todoText = formData.get('newTodo');
 
     const newTodo = {
-      id: crypto.randomUUID(),
+      id: crypto.randomUUID(), // temp id
       name: todoText,
       completed: false,
     };
@@ -35,7 +35,7 @@ const TodoInput = ({ setOptimisticTodos, setTodos }) => {
       <h1 className="text-3xl font-bold">ToDos</h1>
       <form className="mt-4 flex" action={handleAddNewTodo} ref={formRef}>
         <input
-          className="w-80 border-b-2 border-gray-500 text-black"
+          className="w-80 border-b-2 border-gray-500 text-black focus:outline-none pl-2"
           type="text"
           placeholder="Crea un nuevo task"
           name="newTodo"

@@ -11,9 +11,10 @@ export const getTodos = async () => {
     { id: 0, name: 'Task 1', completed: false },
     { id: 1, name: 'Task 2', completed: true },
     { id: 2, name: 'Taks 3', completed: false },
+    { id: 3, name: 'Task 4', completed: true },
   ];
 };
 
 const delayReturn = () => {
   return new Promise(resolve => setTimeout(resolve, 2000));
-}
+};
