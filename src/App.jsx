@@ -1,10 +1,11 @@
-import { getTodos } from './actions/get-planets.action';
+import { getTodos } from './actions/get-todos.action';
 import { Suspense } from 'react';
-import { TodosWrapper } from './components/TodosWrapper';
+import { TodosWrapper } from './components/todos/TodosWrapper';
+import { Loader } from './components/Loader';
 
 function App() {
   return (
-    <Suspense fallback={<div>Cargando...</div>}>
+    <Suspense fallback={<Loader />}>
       <TodosWrapper getTodos={getTodos()} />
     </Suspense>
   );

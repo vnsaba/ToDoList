@@ -1,6 +1,7 @@
 import { useOptimistic } from 'react';
 import { TodoInput } from './TodoInput';
 import { TodoItem } from './TodoItem';
+import { TodoActions } from './TodoActions';
 
 const Todos = ({ todos, setTodos }) => {
   const [optimisticTodos, setOptimisticTodos] = useOptimistic(todos);
@@ -23,12 +24,10 @@ const Todos = ({ todos, setTodos }) => {
         </ul>
       </div>
       <div className="mt-8">
-        <button className="border-2 border-red-500 p-2 text-red-500 rounded-xl">
-          Eliminar completados
-        </button>
-        <button className="border-2 border-indigo-500 p-2 text-indigo-500 ml-4 rounded-xl">
-          Resetear lista
-        </button>
+        <TodoActions
+          setOptimisticTodos={setOptimisticTodos}
+          setTodos={setTodos}
+        />
       </div>
     </>
   );

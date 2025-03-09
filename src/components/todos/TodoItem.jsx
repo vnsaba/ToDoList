@@ -1,5 +1,5 @@
 import { useState, useTransition } from 'react';
-import { completeTodoAction } from '../actions/complete-todo.action';
+import { completeTodoAction } from '../../actions/complete-todo.action';
 
 const TodoItem = ({ id, name, completed, setOptimisticTodos, setTodos }) => {
   const [_, startTransition] = useTransition();

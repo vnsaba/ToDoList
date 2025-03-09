@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { createTodoAction } from '../actions/create-todo.action';
+import { createTodoAction } from '../../actions/create-todo.action';
 
 const TodoInput = ({ setOptimisticTodos, setTodos }) => {
   const formRef = useRef();
