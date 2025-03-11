@@ -7,10 +7,6 @@
 |
 */
 
-import router from '@adonisjs/core/services/router'
+import './routes/task.ts'  //  todo: Fix this import
 
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
-})
+console.log('en archivo routes.ts') 
