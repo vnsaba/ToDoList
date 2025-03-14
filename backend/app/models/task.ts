@@ -1,11 +1,6 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
-
-export enum TaskCategory {
-  WORK = 'work',
-  PERSONAL = 'personal',
-  STUDY = 'study',
-  OTHER = 'other'
-}
+import { DateTime } from 'luxon'
+import { TaskCategory } from './enum_categoria.ts'
 
 export default class Task extends BaseModel {
   @column({ isPrimary: true })

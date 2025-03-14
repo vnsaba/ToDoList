@@ -9,6 +9,9 @@ export default class extends BaseSchema {
       table.string('description').notNullable()
       table.enu('category', ['work', 'personal', 'study', 'other']).notNullable()
       table.string('status').notNullable()
+      // created_at and updated_at columns
+      table.timestamp('created_at', { useTz: true })
+      table.timestamp('updated_at', { useTz: true })
     })
   }
 
