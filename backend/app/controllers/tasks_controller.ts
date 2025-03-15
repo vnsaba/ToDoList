@@ -51,24 +51,40 @@ export default class TasksController {
     return task
   }
 
-  /**
+   /**
    *  Delete only a task by id
    * @param param HttpContext { params, response } have the params and response object 
    */
-  public async delete({ params, response }: HttpContext) {
-    const task = await Task.findOrFail(params.id)
-    await task.delete()
-    response.status(204)
+   public async delete({ params, response }: HttpContext) {
+    try {
+      const task = await Task.findOrFail(params.id)
+      await task.delete()
+      response.status(204)
+    } catch (error) {
+      // response.status(404).send({ message: 'Task not found' })
+      console.log('Dani')
+      console.log(error)
+    }
   }
 
-   /**
+  /**
    * Delete all tasks with status 'completed'
    * @param HttpContext { response } have the response object
    * @returns void
    */
-   public async deleteCompleted({ response }: HttpContext) {
-    await Task.query().where('status', 'completed').delete()
-    response.status(204)
+  public async deleteCompleted({ response }: HttpContext) {
+    try {
+      const completedTasks = await Task.query().where('status', 'completed')
+      console.log(completedTasks)
+      if (completedTasks.length > 0) {
+        await Task.query().where('status', 'completed').delete()
+        response.status(204)
+      } else {
+        response.status(404).send({ message: 'No completed tasks found' })
+      }
+    } catch (error) {
+      response.status(500).send({ message: 'An error occurred while deleting completed tasks', error })
+    }
   }
 
   /**
