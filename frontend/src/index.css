@@ -1,2 +1,7 @@
-@import "tailwindcss";
-@import "tailwindcss-animated";
+@import 'tailwindcss';
+@import 'tailwindcss-animated';
+
+dialog::backdrop {
+  backdrop-filter: blur(4px); /* Desenfoque */
+  background-color: rgba(0, 0, 0, 0.4); /* Atenuación */
+}

@@ -7,13 +7,14 @@ export const getTodos = async () => {
   return res.json();
   */
 
+  
   await delayReturn();
 
   return [
-    { id: 0, name: 'Task 1', completed: false },
-    { id: 1, name: 'Task 2', completed: true },
-    { id: 2, name: 'Taks 3', completed: false },
-    { id: 3, name: 'Task 4', completed: true },
+    { id: 0, description: 'Task 1', status: 'pending', category: 'work' },
+    { id: 1, description: 'Task 2', status: 'pending', category: 'personal' },
+    { id: 2, description: 'Taks 3', status: 'pending', category: 'work' },
+    { id: 3, description: 'Task 4', status: 'pending', category: 'other' },
   ];
 };
 
