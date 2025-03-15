@@ -1,16 +1,22 @@
 import { useRef } from 'react';
 import { createTodoAction } from '../../actions/create-todo.action';
+import { Select } from '../ui/Select';
+import { categories } from '../../utils/data';
 
 const TodoInput = ({ setOptimisticTodos, setTodos }) => {
   const formRef = useRef();
 
   const handleAddNewTodo = async formData => {
     const todoText = formData.get('newTodo');
+    const category = formData.get('category');
+
+    if (!todoText | !category) return;
 
     const newTodo = {
       id: crypto.randomUUID(), // temp id
-      name: todoText,
-      completed: false,
+      description: todoText,
+      category,
+      status: 'pending',
     };
 
     formRef.current.reset();
@@ -33,19 +39,24 @@ const TodoInput = ({ setOptimisticTodos, setTodos }) => {
   return (
     <div className="text-center">
       <h1 className="text-3xl font-bold">ToDos</h1>
-      <form className="mt-4 flex" action={handleAddNewTodo} ref={formRef}>
+      <form
+        className="mt-4 flex items-center"
+        action={handleAddNewTodo}
+        ref={formRef}
+      >
         <input
-          className="w-80 border-b-2 border-gray-500 text-black focus:outline-none pl-2"
+          className="w-80 border-b-2 border-gray-500 text-black focus:outline-none pl-2 mr-3"
           type="text"
-          placeholder="Crea un nuevo task"
+          placeholder="Crea un nueva tarea"
           name="newTodo"
         />
+        <Select items={categories} name="category" />
         <button
           type="submit"
-          className="ml-2 border-2 border-green-500 p-2 text-green-500 hover:text-white hover:bg-green-500 rounded-lg flex"
+          className="ml-2 text-md border-2 border-green-500 px-2 py-1 text-green-500 hover:text-white hover:bg-green-500 rounded-lg flex items-center"
         >
           <svg
-            className="h-6 w-6"
+            className="h-5 w-5"
             width={24}
             height={24}
             viewBox="0 0 24 24"
