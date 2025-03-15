@@ -1,15 +1,15 @@
 export const removeTodoAction = async id => {
-  try {
-    /*
-        await fetch(`http://localhost:3001/api/todos/${id}`, {
+  const { VITE_API_BASE_URL } = import.meta.env;
+
+  if (!id) return;
+
+  /*
+        await fetch(`${VITE_API_BASE_URL}/tasks/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         },
         });
         */
-    console.log('Todo eliminado:', id);
-  } catch (error) {
-    console.error(error);
-  }
+  console.log('Todo eliminado:', id);
 };

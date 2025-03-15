@@ -1,16 +1,13 @@
 export const removeCompletedTodosAction = async todoId => {
-    try {
-      /*
-      await fetch(`http://localhost:3001/api/todos/completed`, {
+  const { VITE_API_BASE_URL } = import.meta.env;
+
+  /*
+      await fetch(`${VITE_API_BASE_URL}/tasks/completed`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
       });
       */
-      console.log('Todo completados eliminados:', todoId);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
+  console.log('Todo completados eliminados:', todoId);
+};

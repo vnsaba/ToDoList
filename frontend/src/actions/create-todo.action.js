@@ -1,7 +1,8 @@
 export const createTodoAction = async todo => {
-  try {
-    /*
-    const res = await fetch('http://localhost:3001/api/todos', {
+  const { VITE_API_BASE_URL } = import.meta.env;
+
+  /*
+    const res = await fetch(`${VITE_API_BASE_URL}/tasks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -14,10 +15,7 @@ export const createTodoAction = async todo => {
     return createdTodo;
     */
 
-    console.log('Todo creado:', todo);
+  console.log('Todo creado:', todo);
 
-    return {...todo, id: Math.floor(Math.random() * 1000)};
-  } catch (error) {
-    console.error(error);
-  }
+  return { ...todo, id: Math.floor(Math.random() * 1000) };
 };

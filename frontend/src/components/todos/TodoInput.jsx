@@ -7,10 +7,12 @@ const TodoInput = ({ setOptimisticTodos, setTodos }) => {
   const handleAddNewTodo = async formData => {
     const todoText = formData.get('newTodo');
 
+    if (!todoText) return;
+
     const newTodo = {
       id: crypto.randomUUID(), // temp id
-      name: todoText,
-      completed: false,
+      description: todoText,
+      status: 'pending',
     };
 
     formRef.current.reset();

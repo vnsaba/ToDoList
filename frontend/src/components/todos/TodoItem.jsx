@@ -2,7 +2,8 @@ import { useState, useTransition } from 'react';
 import { completeTodoAction } from '../../actions/complete-todo.action';
 import { removeTodoAction } from '../../actions/remove-todo.action';
 
-const TodoItem = ({ id, name, completed, setOptimisticTodos, setTodos }) => {
+const TodoItem = ({ id, name, status, setOptimisticTodos, setTodos }) => {
+  const completed = status === 'completed';
   const [_, startTransition] = useTransition();
   const [isChecked, setIsChecked] = useState(completed);
 
