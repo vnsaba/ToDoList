@@ -1,6 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
-
 import Task from '../models/Task.ts'  // TODO: Fix this import
+import { createTaskValidator, updateTaskValidator } from '../validators/task.ts'
 
 export default class TasksController {
 
@@ -21,15 +21,17 @@ export default class TasksController {
   }
 
   public async create({ request }: HttpContext) {
-    const body = request.only(['description', 'category', 'status'])
-    const task = await Task.create(body)
+    const data = request.all()
+    const payload = await createTaskValidator.validate(data)
+    const task = await Task.create(payload)
     return task
   }
 
   public async update({ params, request }: HttpContext) {
     const task = await Task.findOrFail(params.id)
-    const body = request.only(['description', 'category', 'status'])
-    task.merge(body)
+    const data = request.all()
+    const payload = await updateTaskValidator.validate(data)
+    task.merge(payload as Partial<typeof task>)
     await task.save()
     return task
   }

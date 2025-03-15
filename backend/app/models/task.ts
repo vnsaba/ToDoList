@@ -3,7 +3,7 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 export enum TaskCategory {
   WORK = 'work',
   PERSONAL = 'personal',
-  HOBBY = 'hobby',
+  STUDY = 'study',
   OTHER = 'other'
 }
 
