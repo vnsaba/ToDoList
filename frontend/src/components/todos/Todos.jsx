@@ -5,6 +5,7 @@ import { TodosList } from './TodosList';
 
 const Todos = ({ todos, setTodos }) => {
   const [optimisticTodos, setOptimisticTodos] = useOptimistic(todos);
+  const emptyTodos = optimisticTodos.length === 0;
 
   return (
     <>
@@ -23,6 +24,7 @@ const Todos = ({ todos, setTodos }) => {
         <TodoActions
           setOptimisticTodos={setOptimisticTodos}
           setTodos={setTodos}
+          disabled={emptyTodos}
         />
       </div>
     </>

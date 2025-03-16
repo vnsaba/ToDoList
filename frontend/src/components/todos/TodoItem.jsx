@@ -1,5 +1,4 @@
 import { useRef, useState, useTransition } from 'react';
-import { completeTodoAction } from '../../actions/complete-todo.action';
 import { removeTodoAction } from '../../actions/remove-todo.action';
 import { Modal } from '../ui/Modal';
 import { categories } from '../../utils/data';
@@ -35,11 +34,15 @@ const TodoItem = ({
       try {
         setOptimisticTodos(setCompleteTodo);
 
-        await completeTodoAction(id);
+        await editTodoAction({
+          todoId: id,
+          todo: { status: checked ? 'completed' : 'pending' },
+        });
 
         setTodos(setCompleteTodo);
       } catch (error) {
         console.error(error);
+        setIsChecked(!checked);
       }
     });
   };
@@ -52,7 +55,7 @@ const TodoItem = ({
 
         await removeTodoAction(id);
 
-        // setTodos(removeTodo);
+        setTodos(removeTodo);
       } catch (error) {
         console.error(error);
       }
@@ -74,7 +77,10 @@ const TodoItem = ({
 
     try {
       setOptimisticTodos(updateTodoFn);
-      await editTodoAction({ todoId: id, newDescription: todoText });
+      await editTodoAction({
+        todoId: id,
+        todo: { description: todoText, category },
+      });
 
       setTodos(updateTodoFn);
 
@@ -127,7 +133,7 @@ const TodoItem = ({
                   width="16"
                   height="16"
                   fill="currentColor"
-                  class="bi bi-download"
+                  className="bi bi-download"
                   viewBox="0 0 16 16"
                 >
                   <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
