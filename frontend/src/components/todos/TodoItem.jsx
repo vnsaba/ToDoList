@@ -102,9 +102,9 @@ const TodoItem = ({
   return (
     <>
       <Modal ref={modalRef}>
-        <div>
+        <div className="w-full">
           <h3
-            className="text-2xl text-center mt-2 font-bold text-gray-900"
+            className="text-2xl text-center font-bold text-gray-900"
             id="modal-title"
           >
             Actualizar tarea
