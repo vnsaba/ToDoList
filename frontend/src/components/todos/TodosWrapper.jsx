@@ -6,8 +6,8 @@ const TodosWrapper = ({ getTodos }) => {
   const [todos, setTodos] = useState(originalTodos);
 
   return (
-    <div className="w-full min-h-screen grid place-content-center bg-gray-100 pt-8">
-      <div className="bg-white p-12 max-w-xl min-h-1/2 rounded-3xl m-10">
+    <div className="w-full min-h-screen grid place-content-center bg-gray-100">
+      <div className="bg-white p-12 max-w-xl min-h-1/2 rounded-3xl">
         <Todos todos={todos} setTodos={setTodos} />
       </div>
     </div>

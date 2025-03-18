@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { TodoCategories } from './TodosCategories';
 import { TodoItem } from './TodoItem';
+import { categories } from '../../utils/data';
 
 const TodosList = ({
   optimisticTodos,
@@ -8,19 +9,24 @@ const TodosList = ({
   setTodos,
   todos,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const filteredTodos = optimisticTodos.filter(
-    todo => todo.category === selectedCategory
-  );
+  const showAll = selectedCategory === 'all' || !selectedCategory;
 
-  const didntFindTodos = selectedCategory && filteredTodos.length === 0;
+  const allTodos = showAll
+    ? optimisticTodos
+    : optimisticTodos.filter(todo => todo.category === selectedCategory);
+
+  const didntFindTodos = selectedCategory && allTodos.length === 0;
+
+  const headerCategories = [{ label: 'Todos', value: 'all' }, ...categories];
 
   return (
     <>
       {todos.length != 0 && (
         <TodoCategories
           todos={todos}
+          categories={headerCategories}
           setSelectedCategory={setSelectedCategory}
           selectedCategory={selectedCategory}
           setOptimisticTodos={setOptimisticTodos}
@@ -56,27 +62,17 @@ const TodosList = ({
 
       <div className="mt-6">
         <ul>
-          {selectedCategory
-            ? filteredTodos.map(todo => (
-                <TodoItem
-                  description={todo.description}
-                  key={todo.id}
-                  setOptimisticTodos={setOptimisticTodos}
-                  setTodos={setTodos}
-                  status={todo.status}
-                  id={todo.id}
-                />
-              ))
-            : optimisticTodos.map(todo => (
-                <TodoItem
-                  description={todo.description}
-                  key={todo.id}
-                  setOptimisticTodos={setOptimisticTodos}
-                  setTodos={setTodos}
-                  status={todo.status}
-                  id={todo.id}
-                />
-              ))}
+          {allTodos.map(todo => (
+            <TodoItem
+              description={todo.description}
+              key={todo.id}
+              setOptimisticTodos={setOptimisticTodos}
+              setTodos={setTodos}
+              status={todo.status}
+              id={todo.id}
+              category={todo.category}
+            />
+          ))}
         </ul>
       </div>
     </>

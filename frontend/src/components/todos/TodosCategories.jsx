@@ -1,8 +1,7 @@
-import { categories } from '../../utils/data';
-
 const TodoCategories = ({
   selectedCategory,
   setSelectedCategory,
+  categories = []
 }) => {
   const handleFilter = category => {
     setSelectedCategory(category);
