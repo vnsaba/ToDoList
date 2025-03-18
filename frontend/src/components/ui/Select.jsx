@@ -1,4 +1,4 @@
-const Select = ({ headerText, items, name = '', id }) => {
+const Select = ({ headerText, items, name = '', id, defaultValue = '' }) => {
   return (
     <div>
       {headerText && (
@@ -14,6 +14,7 @@ const Select = ({ headerText, items, name = '', id }) => {
         name={name}
         id={id || name}
         className="px-3 w-full border-gray-300 border border-solid py-1.5 rounded-lg text-gray-700 "
+        defaultValue={defaultValue}
       >
         {items.map(item => (
           <option key={item.label} value={item.value}>

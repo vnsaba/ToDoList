@@ -7,8 +7,8 @@ const TodoInput = ({ setOptimisticTodos, setTodos }) => {
   const formRef = useRef();
 
   const handleAddNewTodo = async formData => {
-    const todoText = formData.get('newTodo');
-    const category = formData.get('category');
+    const todoText = formData.get('newTodo').trim();
+    const category = formData.get('category').trim();
 
     if (!todoText | !category) return;
 
@@ -49,6 +49,7 @@ const TodoInput = ({ setOptimisticTodos, setTodos }) => {
           type="text"
           placeholder="Crea un nueva tarea"
           name="newTodo"
+          minLength={3}
         />
         <Select items={categories} name="category" />
         <button

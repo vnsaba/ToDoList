@@ -11,6 +11,7 @@ const TodoItem = ({
   status,
   setOptimisticTodos,
   setTodos,
+  category,
 }) => {
   const completed = status === 'completed';
   const [_, startTransition] = useTransition();
@@ -63,8 +64,8 @@ const TodoItem = ({
   };
 
   const handleEditTodo = async formData => {
-    const todoText = formData.get('newDescription');
-    const category = formData.get('category');
+    const todoText = formData.get('newDescription').trim();
+    const category = formData.get('category').trim();
 
     if (!todoText | !category) return;
 
@@ -100,7 +101,7 @@ const TodoItem = ({
   };
 
   return (
-    <>
+    <div>
       <Modal ref={modalRef}>
         <div className="w-full">
           <h3
@@ -119,7 +120,12 @@ const TodoItem = ({
                 name="newDescription"
                 defaultValue={description}
               />
-              <Select items={categories} name="category" />
+              <Select
+                items={categories}
+                name="category"
+                defaultValue={category}
+                key={category}
+              />
             </div>
 
             <div className="w-full flex justify-end">
@@ -198,7 +204,7 @@ const TodoItem = ({
         </div>
         <hr className="mt-2" />
       </li>
-    </>
+    </div>
   );
 };
 
