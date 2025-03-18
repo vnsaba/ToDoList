@@ -1,5 +1,4 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
-import { DateTime } from 'luxon'
 import { TaskCategory } from './enum_categoria.ts'
 
 export default class Task extends BaseModel {

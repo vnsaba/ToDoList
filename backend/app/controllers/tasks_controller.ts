@@ -1,6 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import Task from '../models/Task.ts'  
 import { createTaskValidator, updateTaskValidator } from '../validators/task.ts'
+import Task from '#models/task'
 
 export default class TasksController {
 
@@ -62,7 +62,6 @@ export default class TasksController {
       response.status(204)
     } catch (error) {
       // response.status(404).send({ message: 'Task not found' })
-      console.log('Dani')
       console.log(error)
     }
   }
